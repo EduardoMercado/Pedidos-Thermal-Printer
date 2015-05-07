@@ -12,7 +12,7 @@ from time import sleep
 
 printer   = Adafruit_Thermal("/dev/ttyAMA0", 19200, timeout=5)
 agent     = 'Gutenbird v1.0'
-mongosite = 'mongodb://pedidos:Tias08MatIgo11Rod@c736.candidate.15.mongolayer.com:10736/pedidos'
+mongosite = 'mongodb://'
 
 
 
