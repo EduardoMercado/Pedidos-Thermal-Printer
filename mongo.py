@@ -42,9 +42,9 @@ for pedido in pedidos:
   
   printer.print(' ' + '{:<31}'.format(cliente['telefono']))
   printer.print(' ' + '{:<31}'.format(cliente['calle']))
-  printer.print('numExt ' + '{:<25}'.format(cliente['numExt']))
-  printer.print('numInt ' + '{:<25}'.format(cliente['numInt']))
-  printer.print('Col ' + '{:<28}'.format(cliente['colonia']))
+  printer.print(' numExt ' + '{:<24}'.format(cliente['numExt']))
+  printer.print(' numInt ' + '{:<24}'.format(cliente['numInt']))
+  printer.print(' Col ' + '{:<27}'.format(cliente['colonia']))
 
   printer.print('total ' + '{:<26}'.format(str(pedido['total'])))
   printer.print('{:<32}'.format(str(pedido['fecha'])))
@@ -96,7 +96,7 @@ for pedido in pedidos:
       printer.print('inicio Ingredientes \n')
       sleep(0.4)
       for ingrediente in item['ingredientes']:
-        printer.print(unidecode(
+        printer.print('  ' + unidecode(
           HTMLParser.HTMLParser().unescape(ingrediente)))
         printer.print('\n')
         sleep(0.3)
