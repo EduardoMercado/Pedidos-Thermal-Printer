@@ -6,7 +6,7 @@ import HTMLParser
 from unidecode import unidecode
 from Adafruit_Thermal import *
 from pymongo import MongoClient
-from time import sleep
+from time import sleep, time
 
 # Other globals.  You probably won't need to change these. -----------------
 
@@ -25,6 +25,7 @@ connection = MongoClient(mongosite)
 db = connection.pedidos
 pedidosDB = db.pedidos
 clientesDB = db.direcciones
+logDB = db.log
 
 # try:
 pedidos = pedidosDB.find({'estatus': 'Enviado a tienda'})
@@ -64,35 +65,35 @@ for pedido in pedidos:
             printer.print(unidecode(
               HTMLParser.HTMLParser().unescape(item['quien'])))
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'nombre' in item.keys():
             printer.print('producto: ')
             printer.print(unidecode(
               HTMLParser.HTMLParser().unescape(item['nombre'])))
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'pan' in item.keys():
             printer.print('pan: ')
             printer.print(item['pan'])
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'tamanio' in item.keys():
             printer.print('tamanio o sabor: ')
             printer.print(item['tamanio'])
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'queso' in item.keys():
             printer.print('Queso: ')
             printer.print(item['queso'])
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'tostado' in item.keys():
             printer.print(item['tostado'])
             printer.print('\n')
-            sleep(0.4)
+            sleep(0.3)
         if 'ingredientes' in item.keys():
             printer.print('inicio Ingredientes \n')
-            sleep(0.4)
+            sleep(0.3)
             for ingrediente in item['ingredientes']:
                 printer.print('  ' + unidecode(
                   HTMLParser.HTMLParser().unescape(ingrediente)))
@@ -113,6 +114,9 @@ for pedido in pedidos:
     check = pedidosDB.update(
         {'_id': pedido['_id']},
         {'$set': {'estatus': 'En tienda'}})
+
+# indico que estoy trabajando
+logId = logDB.insert({'tienda': 'juriquilla', 'selloTiempo': time()})
 
 connection.close()
 # print('conneccion cerrada')
