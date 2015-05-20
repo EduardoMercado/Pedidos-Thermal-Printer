@@ -115,6 +115,7 @@ def main():
         pedidosDB.update(
             {'_id': pedido['_id']},
             {'$set': {'estatus': 'En tienda'}})
+        enviaMensaje(pedido['_id'])
 
     # indico que estoy trabajando
     logDB.insert({'tienda': 'juriquilla', 'selloTiempo': time()})
@@ -123,14 +124,16 @@ def main():
     # print('conneccion cerrada')
 
 
-def enviaMensaje(pedido):
-    authkey = "YourAuthKey"  # Your authentication key.
+def enviaMensaje(numPedido):
+    authkey = ""  # Your authentication key.
 
-    mobiles = "9999999999"  # Multiple mobiles numbers separated by comma.
+    mobiles = "524421560511"
+    # Multiple mobiles numbers separated by comma.
 
-    message = "Test message"  # Your message to send.
+    message = "Atencion un Pedido fue Puesto "  # Your message to send.
+    message += str(numPedido)
 
-    sender = "112233"  # Sender ID,While using route4 6 characters long.
+    sender = "436318"  # Sender ID,While using route4 6 characters long.
 
     route = "default"  # Define route
 
@@ -143,16 +146,12 @@ def enviaMensaje(pedido):
               'route': route
               }
 
-    url = "http://msg91.com/sendhttp.php"  # API URL
+    url = "https://control.msg91.com/sendhttp.php"  # API URL
 
     postdata = urllib.urlencode(values)  # URL encoding the data here.
-
     req = urllib2.Request(url, postdata)
-
     response = urllib2.urlopen(req)
-
     output = response.read()  # Get Response
-
     print(output)  # Print Response
 
 
